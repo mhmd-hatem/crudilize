@@ -1,0 +1,70 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Spell {
+  id Int @id @default(autoincrement())
+  name String @unique
+  level Int
+  area Int?
+  range Int?
+  school SpellSchool
+  components Components
+  areaType AreaType
+  class Class
+  description String @db.Text()
+  higherLevel String  @db.Text()
+  deletedAt DateTime? @db.Timestamp()
+}
+
+enum SpellSchool {
+  enchantment
+  necromancy
+  illusion
+  divination
+  conjuration
+  transmutation
+  abjuration
+  evocation
+}
+
+enum Components {
+  v
+  s
+  m
+  vs
+  vm
+  sm
+  vsm
+}
+
+enum AreaType {
+  touch
+  line
+  cone
+  cube
+  circle
+}
+
+enum Class {
+  sorcerer
+  warlock
+  druid
+  paladin
+  ranger
+  cleric
+  wizard
+  artificer
+  bard
+}
